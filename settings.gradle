@@ -1,2 +1,4 @@
 rootProject.name = 'java-design-patterns'
+include 'observer-pattern'
+include 'strategy-pattern'
 
