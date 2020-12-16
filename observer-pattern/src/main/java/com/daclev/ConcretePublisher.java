@@ -1,40 +1,37 @@
 package com.daclev;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ConcretePublisher implements Publisher
-{
-    private final ArrayList<Subscriber> subscribers;
+public class ConcretePublisher implements Publisher {
+    private final HashMap<String, Subscriber> subscribers;
 
-    public ConcretePublisher(){
-        subscribers = new ArrayList<>();
+    public ConcretePublisher() {
+        subscribers = new HashMap<>();
     }
 
     @Override
-    public void registerObserver(Subscriber subscriber)
-    {
+    public void registerObserver(Subscriber subscriber) {
         // may want to check for subscriber before adding
-        subscribers.add(subscriber);
+        subscribers.put(subscriber.getID(), subscriber);
     }
 
     @Override
-    public void unregisterObserver(Subscriber subscriber)
-    {
-        int index = subscribers.indexOf(subscriber);
-        if (index >= 0) {
-            subscribers.remove(index);
-        }
+    public void unregisterObserver(Subscriber subscriber) {
+        subscribers.remove(subscriber.getID());
     }
 
     @Override
-    public void notifyObservers()
-    {
-        for (Subscriber subscriber : subscribers) {
-            subscriber.update();
-        }
+    public void notifyObservers() {
+        subscribers.forEach((id, subscriber) -> subscriber.update());
     }
 
-    public void someUpdate(){
+    public void broadcastUpdate() {
         notifyObservers();
+    }
+
+    public void updateObserver(String id) {
+        if (subscribers.containsKey(id)) {
+            subscribers.get(id).update();
+        }
     }
 }

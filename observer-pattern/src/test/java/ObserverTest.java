@@ -4,12 +4,27 @@ import org.junit.jupiter.api.Test;
 public class ObserverTest {
 
     @Test
-    void publisherTest() {
-        ConcretePublisher concretePublisher = new ConcretePublisher();
-        ConcreteSubscriberA conA = new ConcreteSubscriberA(concretePublisher);
-        ConcreteSubscriberB conB = new ConcreteSubscriberB(concretePublisher);
-        ConcreteSubscriberC conC = new ConcreteSubscriberC(concretePublisher);
+    void observerPatternTest() {
+        ConcretePublisher conPub = new ConcretePublisher();
+        ConcreteSubscriber conA = new ConcreteSubscriber("conA");
+        ConcreteSubscriber conB = new ConcreteSubscriber("conB");
+        ConcreteSubscriber conC = new ConcreteSubscriber("conC");
 
-        concretePublisher.someUpdate();
+        conPub.registerObserver(conA);
+        conPub.registerObserver(conB);
+        conPub.registerObserver(conC);
+
+        conPub.broadcastUpdate();
+        conPub.unregisterObserver(conA);
+        conPub.broadcastUpdate();
+    }
+
+    @Test
+    void pubSubPatternTest() {
+        ConcretePublisher conPub = new ConcretePublisher();
+        ConcreteSubscriber conA = new ConcreteSubscriber("conA");
+        conPub.registerObserver(conA);
+        conPub.updateObserver("conA");
+        conPub.unregisterObserver(conA);
     }
 }
