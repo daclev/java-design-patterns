@@ -2,10 +2,10 @@ package com.daclev;
 
 import java.util.HashMap;
 
-public class ConcretePublisher implements Publisher {
+public class ConcreteSubject implements Observer {
     private final HashMap<String, Subscriber> subscribers;
 
-    public ConcretePublisher() {
+    public ConcreteSubject() {
         subscribers = new HashMap<>();
     }
 

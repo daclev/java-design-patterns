@@ -3,25 +3,33 @@ import org.junit.jupiter.api.Test;
 
 public class ObserverTest {
 
+    /**
+     * One-to-Many loose couplying between subject (publisher) and observers (subscribers).
+     */
     @Test
     void observerPatternTest() {
-        ConcretePublisher conPub = new ConcretePublisher();
-        ConcreteSubscriber conA = new ConcreteSubscriber("conA");
-        ConcreteSubscriber conB = new ConcreteSubscriber("conB");
-        ConcreteSubscriber conC = new ConcreteSubscriber("conC");
+        ConcreteSubject conPub = new ConcreteSubject();
+        ConcreteSubscriber conSubscriberA = new ConcreteSubscriber("conA");
+        ConcreteSubscriber conSubscriberB = new ConcreteSubscriber("conB");
+        ConcreteSubscriber conSubscriberC = new ConcreteSubscriber("conC");
 
-        conPub.registerObserver(conA);
-        conPub.registerObserver(conB);
-        conPub.registerObserver(conC);
+        conPub.registerObserver(conSubscriberA);
+        conPub.registerObserver(conSubscriberB);
+        conPub.registerObserver(conSubscriberC);
 
         conPub.broadcastUpdate();
-        conPub.unregisterObserver(conA);
+        conPub.unregisterObserver(conSubscriberA);
         conPub.broadcastUpdate();
     }
 
+    /**
+     * Pub-Sub usually have no coupling.
+     * A third component such as a event bus/message broker uses filters to publish messages
+     * to provide to subscribers.
+     */
     @Test
     void pubSubPatternTest() {
-        ConcretePublisher conPub = new ConcretePublisher();
+        ConcreteSubject conPub = new ConcreteSubject();
         ConcreteSubscriber conA = new ConcreteSubscriber("conA");
         conPub.registerObserver(conA);
         conPub.updateObserver("conA");

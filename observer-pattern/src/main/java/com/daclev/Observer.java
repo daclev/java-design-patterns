@@ -1,6 +1,6 @@
 package com.daclev;
 
-public interface Publisher
+public interface Observer
 {
     void registerObserver(Subscriber subscriber);
 
